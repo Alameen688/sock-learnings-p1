@@ -1,31 +1,27 @@
-.App {
+.container {
   visibility: hidden;
-  text-align: center;
-}
-
-.App-header {
-  min-height: 100vh;
+  width: 1440px;
+  height: 100vh;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.circle {
-  width: 75px;
-  height: 75px;
-  border-radius: 100%;
-  margin: 50px;
+.image-container {
+  width: 1440px;
+  height: 960px;
+  position: relative;
+  overflow: hidden;
 }
-
-.circle.blue {
-  background-color: #51A0FD;
+.coverImage {
+  width: 1440px;
+  position: absolute;
 }
-.circle.red {
-  background-color: #FD5151;
-}
-.circle.yellow {
-  background-color: #FDCF51;
+.image-container::after{
+  content: '';
+  background-color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
 }

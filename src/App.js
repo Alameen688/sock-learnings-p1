@@ -1,77 +1,34 @@
-import React, { useRef, useEffect, useState } from "react";
 import "./App.css";
-import { TweenMax, Power3 } from "gsap";
+import React, { useEffect, useRef } from "react";
+import CoverImage from "./images/celebration.jpg";
+import CSSRulePlugin from "gsap/CSSRulePlugin";
+import { TimelineLite, Power2 } from "gsap";
 
 function App() {
-  let app = useRef(null);
+  let image = useRef(null);
+  let container = useRef(null);
+  const imageReveal = CSSRulePlugin.getRule(".image-container::after");
 
-  let circleYellow = useRef(null);
-  let circleRed = useRef(null);
-  let circleBlue = useRef(null);
-
-  const [selectedCircle, setSelectedCircle] = useState(false);
-
-  const handleCircleClick = () => {
-    if (selectedCircle) {
-      TweenMax.to(circleRed, 0.8, {
-        width: 75,
-        height: 75,
-        ease: Power3.easeOut
-      });
-    } else {
-      TweenMax.to(circleRed, 0.8, {
-        width: 200,
-        height: 200,
-        ease: Power3.easeOut
-      });
-    }
-    setSelectedCircle(!selectedCircle);
-  };
+  const tl = new TimelineLite();
 
   useEffect(() => {
-    TweenMax.to(app, 0, { css: { visibility: "visible" } });
-    TweenMax.staggerFrom(
-      [circleYellow, circleRed, circleBlue],
-      0.8,
-      {
-        opacity: 0,
-        x: 40,
-        ease: Power3.easeOut
-      },
-      0.2
-    );
-  }, []);
+    tl.to(container, 1, { css: { visibility: "visible" } })
+      .to(imageReveal, 1.4, { width: "0%", ease: Power2.easeOut })
+      .from(image, 1.4, { scale: 1.8, ease: Power2.easeInOut, delay: -1.6 });
+  });
+
   return (
-    <div
-      ref={el => {
-        app = el;
-      }}
-      className="App"
-    >
-      <header className="App-header">
-        <div className="circle-container">
-          <div
-            ref={el => {
-              circleYellow = el;
-            }}
-            className="circle yellow"
-          ></div>
-          <div
-            ref={el => {
-              circleRed = el;
-            }}
-            className="circle red"
-            onClick={handleCircleClick}
-          ></div>
-          <div
-            ref={el => {
-              circleBlue = el;
-            }}
-            className="circle blue"
-          ></div>
+    <section className="main">
+      <div ref={el => (container = el)} className="container">
+        <div className="image-container">
+          <img
+            ref={el => (image = el)}
+            className="coverImage"
+            src={CoverImage}
+          />
         </div>
-      </header>
-    </div>
+      </div>
+    </section>
   );
 }
 
